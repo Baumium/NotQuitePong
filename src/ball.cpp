@@ -20,7 +20,7 @@ Side Ball::update(SDL_Rect &left, SDL_Rect &right) {
         return RIGHT;
     }
 
-    if((speedX < 0 && rect.x < left.x + left.w && rect.y > left.y && rect.y < left.y + left.h) || (speedX > 0 && rect.x + rect.w > right.x && rect.y < right.y + right.h && rect.y + rect.h > right.y)) {
+    if((speedX < 0 && rect.x < left.x + left.w && rect.y + rect.h > left.y && rect.y < left.y + left.h) || (speedX > 0 && rect.x + rect.w > right.x && rect.y < right.y + right.h && rect.y + rect.h > right.y)) {
         speedX *= -1;
     }
 
