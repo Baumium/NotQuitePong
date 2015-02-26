@@ -14,6 +14,8 @@ Game::Game() {
     SDL_Init(SDL_INIT_EVERYTHING);
 
     //Init font
+    TTF_Init();
+    font = TTF_OpenFont("assets/font.ttf", 20);
 
     //Create window and renderer
     window = SDL_CreateWindow("Not Quite Pong", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
@@ -40,7 +42,7 @@ void Game::input() {
 
             case SDL_KEYDOWN:
                 switch(event.key.keysym.sym) {
-                    case SDLK_ESCAPE:
+                    case SDLK_ESCAPE: //Escape = mark program for closure
                         isExit = true;
                         break;
                     case SDLK_SPACE: //If space is pressed, start the game
@@ -79,6 +81,9 @@ void Game::render() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
     SDL_RenderClear(renderer);
 
+    std::string message = "food";
+    SDL_RenderCopy(renderer, renderText(&message), nullptr, new (SDL_Rect){50, 50, 100, 100});
+
     SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
     SDL_Rect centerLine = {SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 60, SCREEN_HEIGHT};
     SDL_RenderFillRect(renderer, &centerLine);
@@ -90,6 +95,7 @@ void Game::render() {
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
     ball->render(renderer);
 
+
     SDL_RenderPresent(renderer);
 }
 
@@ -100,6 +106,8 @@ void Game::cleanUp() {
     SDL_DestroyRenderer(renderer);
     renderer = nullptr;
     SDL_Quit();
+    TTF_CloseFont(font);
+    TTF_Quit();
 }
 
 void Game::execute() {
@@ -110,4 +118,10 @@ void Game::execute() {
     }
 
     cleanUp();
+}
+
+SDL_Texture* Game::renderText(std::string *text) {
+    SDL_Surface* surfaceMessage = TTF_RenderText_Solid(font, text->c_str(), (SDL_Color){255, 255, 255});
+    SDL_Texture* message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
+    return message;
 }

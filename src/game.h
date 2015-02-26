@@ -2,8 +2,10 @@
 #define GAME_H
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include "paddle.h"
 #include "ball.h"
+#include <string>
 
 class Game {
     private:
@@ -16,6 +18,7 @@ class Game {
         Paddle *leftPaddle;
         Paddle *rightPaddle;
         Ball *ball;
+        TTF_Font *font;
 
         bool isPlaying;
     public:
@@ -29,6 +32,7 @@ class Game {
         void render();
         void execute();
         void cleanUp();
+        SDL_Texture* renderText(std::string *text);
 };
 
 #endif
