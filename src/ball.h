@@ -7,8 +7,9 @@
 
 class Ball : public Entity {
     private:
-        int speedX;
-        int speedY;
+        const double SPEED;
+        double speedX;
+        double speedY;
 
     public:
         Ball(int speed);
