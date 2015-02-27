@@ -25,9 +25,12 @@ Game::Game() {
     isExit = false;
 
     //Instantiate game objects
+    centerLine = new SDL_Rect {SCREEN_WIDTH / 2 - SCREEN_WIDTH / 60, 0, SCREEN_WIDTH / 60, SCREEN_HEIGHT};
     leftPaddle = new Paddle(6, LEFT, false);
-    rightPaddle = new Paddle(6, RIGHT, true);
-    ball = new Ball(6);
+    rightPaddle = new Paddle(6, RIGHT, false);
+    bottomPaddle = new Paddle(6, BOTTOM, false);
+    topPaddle = new Paddle(6, TOP, false);
+    ball = new Ball(2);
 
     isPlaying = false;
 }
@@ -56,15 +59,23 @@ void Game::input() {
 
     if(keystates[SDL_SCANCODE_W]) {
         leftPaddle->moveUp();
-    }
-    if(keystates[SDL_SCANCODE_S]) {
+    } else if(keystates[SDL_SCANCODE_S]) {
         leftPaddle->moveDown();
     }
     if(keystates[SDL_SCANCODE_UP]) {
         rightPaddle->moveUp();
-    }
-    if(keystates[SDL_SCANCODE_DOWN]) {
+    } else if(keystates[SDL_SCANCODE_DOWN]) {
         rightPaddle->moveDown();
+    }
+    if(keystates[SDL_SCANCODE_Z]) {
+        topPaddle->moveLeft();
+    } else if(keystates[SDL_SCANCODE_X]) {
+        topPaddle->moveRight();
+    }
+    if(keystates[SDL_SCANCODE_RIGHTBRACKET]) {
+        bottomPaddle->moveRight();
+    } else if(keystates[SDL_SCANCODE_LEFTBRACKET]) {
+        bottomPaddle->moveLeft();
     }
 }
 
@@ -72,7 +83,7 @@ void Game::update() {
     leftPaddle->update(ball->getY());
     rightPaddle->update(ball->getY());
     if(isPlaying) {
-        ball->update(leftPaddle->getRect(), rightPaddle->getRect());
+        ball->update(leftPaddle->getRect(), rightPaddle->getRect(), topPaddle->getRect(), bottomPaddle->getRect());
     }
 }
 
@@ -81,17 +92,18 @@ void Game::render() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
     SDL_RenderClear(renderer);
 
-    std::string message = "food";
-    SDL_RenderCopy(renderer, renderText(&message), nullptr, new (SDL_Rect){50, 50, 100, 100});
+    //std::string message = "food";
+    //SDL_RenderCopy(renderer, renderText(&message), nullptr, new (SDL_Rect){50, 50, 100, 100});
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-    SDL_Rect centerLine = {SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 60, SCREEN_HEIGHT};
-    SDL_RenderFillRect(renderer, &centerLine);
+    SDL_RenderFillRect(renderer, centerLine);
 
     //Render game objects
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     leftPaddle->render(renderer);
     rightPaddle->render(renderer);
+    bottomPaddle->render(renderer);
+    topPaddle->render(renderer);
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
     ball->render(renderer);
 

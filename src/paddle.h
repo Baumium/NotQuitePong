@@ -16,6 +16,8 @@ class Paddle : public Entity {
         void setSpeed(int speed);
         void moveDown();
         void moveUp();
+        void moveLeft();
+        void moveRight();
         SDL_Rect& getRect();
 };
 

@@ -4,6 +4,8 @@
 enum Side {
     LEFT,
     RIGHT,
+    BOTTOM,
+    TOP,
     NONE
 };
 

@@ -12,7 +12,7 @@ class Ball : public Entity {
 
     public:
         Ball(int speed);
-        Side update(SDL_Rect &left, SDL_Rect &right);
+        Side update(SDL_Rect &left, SDL_Rect &right, SDL_Rect &top, SDL_Rect &bottom);
         void reset();
 };
 

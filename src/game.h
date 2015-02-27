@@ -15,8 +15,11 @@ class Game {
 
         bool isExit;
 
+        SDL_Rect *centerLine;
         Paddle *leftPaddle;
         Paddle *rightPaddle;
+        Paddle *bottomPaddle;
+        Paddle *topPaddle;
         Ball *ball;
         TTF_Font *font;
 

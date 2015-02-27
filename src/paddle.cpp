@@ -4,8 +4,12 @@
 #include "side.h"
 
 //Assign paddle size based on screen size
-Paddle::Paddle(int speed, Side side, bool isAI) : Entity(side == LEFT ? 0 : Game::SCREEN_WIDTH - Game::SCREEN_WIDTH / 50, Game::SCREEN_HEIGHT / 2 - (Game::SCREEN_HEIGHT / 4) / 2, Game::SCREEN_WIDTH / 50, Game::SCREEN_HEIGHT / 4), speed(speed), isAI(isAI) {
-
+Paddle::Paddle(int speed, Side side, bool isAI) :
+    Entity(side == LEFT ? 0 : side == RIGHT ? Game::SCREEN_WIDTH - Game::SCREEN_WIDTH / 50 : Game::SCREEN_HEIGHT / 2 + Game::SCREEN_WIDTH / 50,
+            side == LEFT || side == RIGHT ? Game::SCREEN_HEIGHT / 2 - (Game::SCREEN_HEIGHT / 4) / 2 : side == TOP ? 0 : Game::SCREEN_HEIGHT - Game::SCREEN_WIDTH / 50,
+            side == LEFT || side == RIGHT ? Game::SCREEN_WIDTH / 50 : Game::SCREEN_HEIGHT / 4,
+            side == LEFT || side == RIGHT ? Game::SCREEN_HEIGHT / 4 : Game::SCREEN_WIDTH / 50),
+    speed(speed), isAI(isAI) {
 }
 
 void Paddle::update(int ballY) {
@@ -26,9 +30,20 @@ void Paddle::moveUp() {
 }
 
 void Paddle::moveDown() {
-    //If we are not touching the bottom of the screen
     if(rect.y + rect.h < Game::SCREEN_HEIGHT) {
         rect.y += speed;
+    }
+}
+
+void Paddle::moveLeft() {
+    if(rect.x > 0) {
+        rect.x -= speed;
+    }
+}
+
+void Paddle::moveRight() {
+    if(rect.x + rect.w < Game::SCREEN_WIDTH) {
+        rect.x += speed;
     }
 }
 
