@@ -30,7 +30,7 @@ Game::Game() {
     rightPaddle = new Paddle(6, RIGHT, false);
     bottomPaddle = new Paddle(6, BOTTOM, false);
     topPaddle = new Paddle(6, TOP, false);
-    ball = new Ball(2);
+    ball = new Ball(5);
 
     isPlaying = false;
 }

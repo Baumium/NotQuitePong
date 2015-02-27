@@ -20,30 +20,33 @@ Side Ball::update(SDL_Rect &left, SDL_Rect &right, SDL_Rect &top, SDL_Rect &bott
 
     if(speedX < 0 && rect.x < left.x + left.w && rect.y + rect.h > left.y && rect.y < left.y + left.h) {
         //Intersections with left
-        double angle = (((left.y + left.h / 2) - (rect.y + rect.h / 2)) / left.h / 2) * 75;
+        double relativeY = left.y + (left.h / 2.0f) - (rect.y + rect.h / 2.0f);
+        double angle = (relativeY / (left.h / 2.0f) );
         speedX = SPEED * cos(angle);
-        speedY = SPEED * sin(angle);
+        speedY = SPEED * -sin(angle);
     } else if (speedX > 0 && rect.x + rect.w > right.x && rect.y < right.y + right.h && rect.y + rect.h > right.y) {
         //Intersections with right
-        double angle = (((right.y + right.h / 2) - (rect.y + rect.h / 2)) / right.h / 2) * 75;
-        speedX = SPEED * cos(angle);
-        speedY = SPEED * sin(angle);
+        double relativeY = right.y + (right.h / 2.0f) - (rect.y + rect.h / 2.0f);
+        double angle = (relativeY / (right.h / 2.0f) );
+        speedX = SPEED * -cos(angle);
+        speedY = SPEED * -sin(angle);
     } else if(speedY < 0 && rect.x < top.x + top.w && rect.x + rect.w > top.x && rect.y < top.y + top.h) {
         //Intersections with top
-        double angle = (((top.x + top.w / 2) - (rect.x + rect.w / 2)) / top.w / 2) * 75;
-        speedX = SPEED * sin(angle);
+        double relativeX = top.x + (top.w / 2.0f) - (rect.x + rect.w / 2.0f);
+        double angle = (relativeX / (top.w / 2.0f) );
+        speedX = SPEED * -sin(angle);
         speedY = SPEED * cos(angle);
     } else if (speedY > 0 && rect.x < bottom.x + bottom.w && rect.x + rect.w > bottom.x && rect.y + rect.h > bottom.y) {
         //Interesections with bottom
-        double angle = (((bottom.x + bottom.w / 2) - (rect.x + rect.w / 2)) / bottom.w / 2) * 75;
-        speedX = SPEED * sin(angle);
-        speedY = SPEED * cos(angle);
+        double relativeX = bottom.x + (bottom.w / 2.0f) - (rect.x + rect.w / 2.0f);
+        double angle = (relativeX / (bottom.w / 2.0f) );
+        speedX = SPEED * -sin(angle);
+        speedY = SPEED * -cos(angle);
     }
 
     //If the ball has not gone off the screen, proceed to move the ball
     rect.x += ceil(speedX);
     rect.y += ceil(speedY);
-    printf("%f\n", speedY);
     return NONE;
 }
 
