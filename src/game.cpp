@@ -25,12 +25,11 @@ Game::Game() {
     isExit = false;
 
     //Instantiate game objects
-    centerLine = new SDL_Rect {SCREEN_WIDTH / 2 - SCREEN_WIDTH / 60, 0, SCREEN_WIDTH / 60, SCREEN_HEIGHT};
-    leftPaddle = new Paddle(6, LEFT, false);
-    rightPaddle = new Paddle(6, RIGHT, false);
-    bottomPaddle = new Paddle(6, BOTTOM, false);
-    topPaddle = new Paddle(6, TOP, false);
-    ball = new Ball(5);
+    leftPaddle = new Paddle(7, LEFT, true);
+    rightPaddle = new Paddle(7, RIGHT, true);
+    bottomPaddle = new Paddle(7, BOTTOM, true);
+    topPaddle = new Paddle(7, TOP, true);
+    ball = new Ball(10);
 
     isPlaying = false;
 }
@@ -80,8 +79,10 @@ void Game::input() {
 }
 
 void Game::update() {
-    leftPaddle->update(ball->getY());
-    rightPaddle->update(ball->getY());
+    leftPaddle->update(ball->getRect());
+    rightPaddle->update(ball->getRect());
+    bottomPaddle->update(ball->getRect());
+    topPaddle->update(ball->getRect());
     if(isPlaying) {
         ball->update(leftPaddle->getRect(), rightPaddle->getRect(), topPaddle->getRect(), bottomPaddle->getRect());
     }
@@ -96,7 +97,6 @@ void Game::render() {
     //SDL_RenderCopy(renderer, renderText(&message), nullptr, new (SDL_Rect){50, 50, 100, 100});
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-    SDL_RenderFillRect(renderer, centerLine);
 
     //Render game objects
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);

@@ -16,3 +16,11 @@ void Entity::update() {
 int Entity::getY() const {
     return rect.y;
 }
+
+int Entity::getCenter() const {
+    return rect.y + rect.h / 2;
+}
+
+SDL_Rect Entity::getRect() const {
+    return rect;
+}

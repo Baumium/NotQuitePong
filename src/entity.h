@@ -15,6 +15,8 @@ class Entity {
         int getY() const;
         int getWidth() const;
         int getHeight() const;
+        int getCenter() const;
+        SDL_Rect getRect() const;
 
         void setX(int x);
         void setY(int y);

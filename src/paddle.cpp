@@ -9,12 +9,24 @@ Paddle::Paddle(int speed, Side side, bool isAI) :
             side == LEFT || side == RIGHT ? Game::SCREEN_HEIGHT / 2 - (Game::SCREEN_HEIGHT / 4) / 2 : side == TOP ? 0 : Game::SCREEN_HEIGHT - Game::SCREEN_WIDTH / 50,
             side == LEFT || side == RIGHT ? Game::SCREEN_WIDTH / 50 : Game::SCREEN_HEIGHT / 4,
             side == LEFT || side == RIGHT ? Game::SCREEN_HEIGHT / 4 : Game::SCREEN_WIDTH / 50),
-    speed(speed), isAI(isAI) {
+    speed(speed), isAI(isAI), side(side) {
 }
 
-void Paddle::update(int ballY) {
+void Paddle::update(SDL_Rect ball) {
     if(isAI) {
-        rect.y = ballY - rect.h / 2;
+        if(side == LEFT || side == RIGHT) {
+            double movement = (rect.y + rect.h / 2.0 - ball.y + ball.h / 2.0) / speed;
+            if((movement > 0 && rect.y > 0)
+                    || (movement < 0 && rect.y + rect.h < Game::SCREEN_HEIGHT)) {
+                rect.y -= movement;
+            }
+        } else if(side == TOP || side == BOTTOM) {
+            double movement = (rect.x + rect.w / 2.0 - ball.x + ball.w / 2.0 / speed);
+            if((movement > 0 && rect.x > 0)
+                    || (movement < 0 && rect.x + rect.w < Game::SCREEN_WIDTH)) {
+                rect.x -= movement;
+            }
+        }
     }
 }
 
@@ -40,7 +52,6 @@ void Paddle::moveLeft() {
         rect.x -= speed;
     }
 }
-
 void Paddle::moveRight() {
     if(rect.x + rect.w < Game::SCREEN_WIDTH) {
         rect.x += speed;

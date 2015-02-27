@@ -15,7 +15,6 @@ class Game {
 
         bool isExit;
 
-        SDL_Rect *centerLine;
         Paddle *leftPaddle;
         Paddle *rightPaddle;
         Paddle *bottomPaddle;

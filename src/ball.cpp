@@ -53,6 +53,6 @@ Side Ball::update(SDL_Rect &left, SDL_Rect &right, SDL_Rect &top, SDL_Rect &bott
 void Ball::reset() {
     rect.x = Game::SCREEN_WIDTH / 2;
     rect.y = Game::SCREEN_HEIGHT / 2;
-    speedX = SPEED;
-    speedY = SPEED;
+    speedX < 0 ? speedX = SPEED : speedX = -SPEED;
+    speedY < 0 ? speedY = SPEED : speedY = -SPEED;
 }

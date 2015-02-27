@@ -9,10 +9,11 @@ class Paddle : public Entity {
     private:
         int speed;
         bool isAI;
+        Side side;
 
     public:
         Paddle(int speed, Side side, bool isAI);
-        void update(int ballX);
+        void update(SDL_Rect ball);
         void setSpeed(int speed);
         void moveDown();
         void moveUp();
